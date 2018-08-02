@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dao.PartnerDAO;
+import com.model.PartnerModel;
 
 @RestController
 public class PartnerController {
 
 	
 	@Autowired
-	@Qualifier("partner")
+	@Qualifier("PartnerDAOImpl")
 	private PartnerDAO x;
 	
 	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getMezzo(@PathVariable("id") int id) {
 	
-	return ResponseEntity.ok(x.getPartnerById(id));
+	return ResponseEntity.ok(x.getPartnerById(id , PartnerModel.class) );
 	}
 		
 }
