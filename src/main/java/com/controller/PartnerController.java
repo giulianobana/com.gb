@@ -32,5 +32,10 @@ public class PartnerController {
 	return ResponseEntity.ok(x.createEntity(p));
 	
 	}
-		
+	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.PUT)
+	public  ResponseEntity<Object> update(@RequestBody PartnerModel p) {	
+	return ResponseEntity.ok(x.updateEntity(p));
+	
+	}
+				
 }

@@ -28,4 +28,13 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    session.close();	
 	    return object;
 	}
+	
+	public Object updateEntity(Object object) {
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    session.update(object);
+	    session.getTransaction().commit();
+	    session.close();	
+	    return object;
+	}
 }
