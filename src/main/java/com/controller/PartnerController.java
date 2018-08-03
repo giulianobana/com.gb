@@ -3,6 +3,7 @@ package com.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,15 @@ public class PartnerController {
 	private PartnerDAO x;
 	
 	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> getMezzo(@PathVariable("id") int id) {
+	public ResponseEntity<Object> getPartner(@PathVariable("id") int id) {
 	
-	return ResponseEntity.ok(x.getPartnerById(id , PartnerModel.class) );
+	return ResponseEntity.ok(x.getEntity(id , PartnerModel.class) );
+	}
+	
+	@RequestMapping(value = "/partner/" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> add(@RequestBody PartnerModel p) {	
+	return ResponseEntity.ok(x.createEntity(p));
+	
 	}
 		
 }

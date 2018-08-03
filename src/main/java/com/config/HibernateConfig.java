@@ -73,7 +73,7 @@ public class HibernateConfig {
     	LocalSessionFactoryBean asfb = new LocalSessionFactoryBean();
         asfb.setDataSource(getDataSource());
         asfb.setHibernateProperties(getHibernateProperties());        
-        asfb.setPackagesToScan(new String[]{"com.dao.*"});
+        asfb.setPackagesToScan(new String[]{"com.*"});
         return asfb;
     }
 
