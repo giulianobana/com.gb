@@ -20,7 +20,7 @@ USE `openbanking` ;
 -- -----------------------------------------------------
 -- Table `openbanking`.`partner`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `openbanking`.`partner` ;
+DROP TABLE IF EXISTS `openbanking`.`partner`;
 
 CREATE TABLE IF NOT EXISTS `openbanking`.`partner` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
