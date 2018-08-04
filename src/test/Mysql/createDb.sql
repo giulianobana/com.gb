@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema openbanking
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `openbanking` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `openbanking` DEFAULT;
 USE `openbanking` ;
 
 -- -----------------------------------------------------
@@ -29,9 +29,7 @@ CREATE TABLE IF NOT EXISTS `openbanking`.`partner` (
   `email` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 12;
 
 
 -- -----------------------------------------------------
@@ -49,9 +47,7 @@ CREATE TABLE IF NOT EXISTS `openbanking`.`plan` (
     FOREIGN KEY (`id`)
     REFERENCES `openbanking`.`partner` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
