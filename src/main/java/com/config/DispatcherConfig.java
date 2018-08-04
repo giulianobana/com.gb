@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.*"}) 
-@Import({HibernateConfig.class})
+@Import({HibernateConfig.class ,SecurityConfig.class })
 public class DispatcherConfig implements  WebMvcConfigurer  {
 
 	// setting property file
@@ -26,6 +26,7 @@ public class DispatcherConfig implements  WebMvcConfigurer  {
     public PropertyPlaceholderConfigurer getPropertyPlaceholderConfigurer()
     {
         PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
+       
         ppc.setLocation(new ClassPathResource("application.properties"));
         ppc.setIgnoreUnresolvablePlaceholders(true);
         return ppc;
