@@ -21,31 +21,30 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value(value = "${auth0.apiAudience}")
+    //@Value(value = "https://openbanking.com/api")
     private String apiAudience;
     @Value(value = "${auth0.issuer}")
+    // @Value(value = "https://gbproject.auth0.com/")
     private String issuer;
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedHeader("Authorization");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+//        configuration.setAllowCredentials(true);
+//        configuration.addAllowedHeader("Authorization");
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors();
+       // http.cors();
+    	
         JwtWebSecurityConfigurer
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/partner/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/partner/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/partner/**").hasAuthority("read:messages");
-    }
-}
+           .anyRequest().authenticated();     }  }  
