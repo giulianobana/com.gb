@@ -1,4 +1,4 @@
-package com.config;
+package open.com.config;
 
 
 import java.util.HashMap;

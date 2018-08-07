@@ -1,4 +1,4 @@
-package com.config;
+package open.com.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.*"}) 
+@ComponentScan(basePackages = {"open.*"}) 
 @Import({HibernateConfig.class ,SecurityConfig.class })
 public class DispatcherConfig implements  WebMvcConfigurer  {
 

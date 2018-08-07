@@ -1,4 +1,4 @@
-package com.dao;
+package open.com.dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.model.PartnerModel;
+import open.com.model.PartnerModel;
 
 @Component("PartnerDAOImpl")
 public class PartnerDAOImpl extends AccessDAOImpl implements PartnerDAO {

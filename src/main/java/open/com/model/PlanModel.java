@@ -1,4 +1,4 @@
-package com.model;
+package open.com.model;
 
 
 import javax.persistence.Column;

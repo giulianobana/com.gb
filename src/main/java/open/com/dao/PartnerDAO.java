@@ -1,8 +1,8 @@
-package com.dao;
+package open.com.dao;
 
 import java.util.List;
 
-import com.model.PartnerModel;
+import open.com.model.PartnerModel;
 
 public interface PartnerDAO extends AccessDAO{
 

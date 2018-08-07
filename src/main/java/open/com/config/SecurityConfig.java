@@ -1,4 +1,4 @@
-package com.config;
+package open.com.config;
 
 
 import com.auth0.spring.security.api.JwtWebSecurityConfigurer;

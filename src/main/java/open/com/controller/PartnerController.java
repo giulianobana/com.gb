@@ -1,4 +1,4 @@
-package com.controller;
+package open.com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dao.PartnerDAO;
-import com.model.PartnerModel;
+import open.com.dao.PartnerDAO;
+import open.com.model.PartnerModel;
 
 @RestController
 public class PartnerController {
