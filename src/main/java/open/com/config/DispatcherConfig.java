@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -39,5 +40,10 @@ public class DispatcherConfig implements  WebMvcConfigurer  {
         ppc.setLocations(resourceLst.toArray(new Resource[]{}));
         ppc.setIgnoreUnresolvablePlaceholders(true);
         return ppc;
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new  LoginInterceptor());
     }
 }

@@ -73,7 +73,7 @@ public class HibernateConfig {
     	LocalSessionFactoryBean asfb = new LocalSessionFactoryBean();
         asfb.setDataSource(getDataSource());
         asfb.setHibernateProperties(getHibernateProperties());        
-        asfb.setPackagesToScan(new String[]{"com.*"});
+        asfb.setPackagesToScan(new String[]{"open.*"});
         return asfb;
     }
 

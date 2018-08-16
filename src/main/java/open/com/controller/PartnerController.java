@@ -1,7 +1,10 @@
 package open.com.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,16 +18,16 @@ import open.com.dao.PartnerDAO;
 import open.com.model.PartnerModel;
 
 @RestController
+@Scope("request")
 public class PartnerController {
 
-	
 	@Autowired
-	@Qualifier("PartnerDAOImpl")
+	@Qualifier("PartnerBusiness")
 	private PartnerDAO x;
 	
 	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getPartner(@PathVariable("id") int id) {	
-	return ResponseEntity.ok(x.getEntity(id , PartnerModel.class) );
+		return ResponseEntity.ok(x.getEntity(id , PartnerModel.class) );
 	}
 	
 	//create
