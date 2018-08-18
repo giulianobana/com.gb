@@ -1,6 +1,5 @@
 package open.com.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,34 +8,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="plan")
-public class PlanModel {
+@Table(name="DELEGATION")
+public class DelegationModel {
 
-
+	
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int partnerId;
-	private int type;
 	
+	
+	private String username;
+	private String delegatedUser;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getPartnerId() {
-		return partnerId;
+	public String getUsername() {
+		return username;
 	}
-	public void setPartnerId(int partnerId) {
-		this.partnerId = partnerId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public int getType() {
-		return type;
+	public String getDelegatedUser() {
+		return delegatedUser;
 	}
-	public void setType(int type) {
-		this.type = type;
+	public void setDelegatedUser(String delegatedUser) {
+		this.delegatedUser = delegatedUser;
 	}
 	
 }

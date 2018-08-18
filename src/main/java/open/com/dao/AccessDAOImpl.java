@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public abstract class AccessDAOImpl implements AccessDAO {
 
 	
 	@Autowired
-	private HttpServletRequest request;
+	protected HttpServletRequest request;
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -46,21 +47,24 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	
 	public Object createEntity(Object object) {
 		ResponseObject response = new ResponseObject();
-	// se errore ritorno messaggio	
-		if (!onCreateChecks(response , object)) {
-		Session session = sessionFactory.openSession();
-	    session.beginTransaction();
-	    Object a = session.save(object);
-	    session.getTransaction().commit();
-		session.close();
-		addErrorMessage(response, "INFO" , "200" , "Resource successfully created");
+		// se errore ritorno messaggio
+		if (!onCreateChecks(response, object)) {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			try {
+				Object a = session.save(object);
+				session.getTransaction().commit();
+				addErrorMessage(response, "INFO", "200", "Resource successfully created");
+			} catch (ConstraintViolationException e) {
+				addErrorMessage(response, "ERROR", "400", e.getCause().getMessage());
+			}
+			session.close();
 		}
-	    response.setObject(object);
+		response.setObject(object);
 		return response;
-		
-		}
-		
-		
+
+	}
+	
 	public Object updateEntity(Object object) {
 		ResponseObject response = new ResponseObject();
 	

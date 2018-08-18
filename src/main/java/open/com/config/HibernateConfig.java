@@ -37,6 +37,8 @@ public class HibernateConfig {
     @Value("${hibernate.dialect}")         private String hibernateDialect;
     @Value("${hibernate.show_sql}")     private String hibernateShowSql;
     @Value("${hibernate.hbm2ddl.auto}") private String hibernateHbm2ddlAuto;
+    @Value("${hibernate.jdbc.time_zone}") private String hibernateTimeZone;
+
         
     @Bean()    
     public DataSource getDataSource()
@@ -84,6 +86,7 @@ public class HibernateConfig {
         properties.put("hibernate.dialect", hibernateDialect);
         properties.put("hibernate.show_sql", hibernateShowSql);
         properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+        properties.put("hibernate.jdbc.time_zone", hibernateTimeZone);
         
         return properties;
     }

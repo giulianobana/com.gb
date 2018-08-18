@@ -10,21 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import open.com.model.PartnerModel;
+import open.com.model.CustomerModel;
+import open.com.model.DelegationModel;
 import open.com.model.ResponseObject;
 import open.com.model.ResponseObject.Messages;
 
-@Component("PartnerDAOImpl")
-public class PartnerDAOImpl extends AccessDAOImpl implements PartnerDAO {
+@Component("DelegationDAOImpl")
+public class DelegationDAOImpl extends AccessDAOImpl implements DelegationDAO {
 
-	@Override
-	public List<Object> searchPartnerByName(String n) {
+	public List<Object> searchMyDelegation() {
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
-	    String queryString =  "Select e from " + PartnerModel.class.getName() + " e " +
-             "where e.fullName=:fullName  order by e.id ";
+	    String queryString =  "Select e from " + DelegationModel.class.getName() + " e " +
+             "where e.username = :userlogin "
+             + " order by e.delegateduser ";
 		Query<Object> query = session.createQuery(queryString);
-		query.setParameter("fullName", n);
+		query.setParameter("userlogin", (String) request.getAttribute("user"));
 	    return query.getResultList();
 	}
 

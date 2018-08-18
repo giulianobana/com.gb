@@ -14,36 +14,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.PartnerDAO;
-import open.com.model.PartnerModel;
+import open.com.dao.CustomerDAO;
+import open.com.model.CustomerModel;
 
 @RestController
 @Scope("request")
-public class PartnerController {
+public class CustomerController {
 
 	@Autowired
-	@Qualifier("PartnerBusiness")
-	private PartnerDAO x;
+	@Qualifier("CustomerBusiness")
+	private CustomerDAO x;
 	
-	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> getPartner(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.getEntity(id , PartnerModel.class) );
+	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(x.getEntity(id , CustomerModel.class) );
 	}
 	
 	//create
-	@RequestMapping(value = "/partner/" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> add(@RequestBody PartnerModel p) {	
+	@RequestMapping(value = "/customers/" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> add(@RequestBody CustomerModel p) {	
 	return ResponseEntity.ok(x.createEntity(p));
 	}
 
 	// searchByName
-	@RequestMapping(value = "/partner" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> searchByName(@RequestParam("name") String p) {	
-	return ResponseEntity.ok(x.searchPartnerByName(p));
+	@RequestMapping(value = "/customers" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> searchByName(@RequestParam("username") String p) {	
+	return ResponseEntity.ok(x.searchCustomerByName(p));
 	}
 	
-	@RequestMapping(value = "/partner/{id}" ,  method = RequestMethod.PUT)
-	public  ResponseEntity<Object> update(@RequestBody PartnerModel p) {	
+	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.PUT)
+	public  ResponseEntity<Object> update(@RequestBody CustomerModel p) {	
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
 				

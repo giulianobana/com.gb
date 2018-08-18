@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -47,7 +48,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		// StringUtils.isEmpty(password) || StringUtils.containsWhitespace(password)) {
 		// throw new Exception("Invalid User Id or Password. Please try again.");
 		// }
-		request.setAttribute("user", result.getBody().getName());
+		request.setAttribute("user", result.getBody().getEmail());
 		return true;
     }
 
