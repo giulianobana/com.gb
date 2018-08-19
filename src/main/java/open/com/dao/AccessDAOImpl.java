@@ -27,7 +27,6 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	public Object getEntity(int id, Class<?> classe ) {
 		ResponseObject response = new ResponseObject();
 		// TODO Auto-generated method stub
-		System.out.println(request.getAttribute("user"));
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
 	    Object h = session.get(classe , id);
@@ -80,6 +79,16 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    return object;
 	}
 	
+	public Object deleteEntity(int id , Class<?> classe) {
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    session.delete(session.load(classe.getName(),id) );
+	    session.getTransaction().commit();
+	    session.close();	
+		ResponseObject response = new ResponseObject();
+		addErrorMessage(response, "INFO" , "200" , "Resource successfully created");
+		return id;
+	}
 	// adding error messages
 	public void addErrorMessage(ResponseObject  response , String level, String code , String message) {
 //		List<Messages> errors = new ArrayList<Messages>();

@@ -12,22 +12,24 @@ import org.springframework.stereotype.Component;
 
 import open.com.model.CustomerModel;
 import open.com.model.DelegationModel;
-import open.com.model.ResponseObject;
-import open.com.model.ResponseObject.Messages;
+import open.com.model.KycModel;
 
-@Component("DelegationDAOImpl")
-public class DelegationDAOImpl extends AccessDAOImpl implements DelegationDAO {
 
-	public List<Object> searchMyDelegation() {
+@Component("KycDAOImpl")
+public class KycDAOImpl extends AccessDAOImpl implements KycDAO {
+
+	@Override
+	public Object getKycFromCustomer(int id) {
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
-	    String queryString =  "Select e from " + DelegationModel.class.getName() + " e " +
-             "where e.username = :userlogin "
-             + " order by e.delegatedUser ";
+	    String queryString =  "Select e from " + KycModel.class.getName() + " e " +
+             "where e.customerid = :customerid ";
 		Query<Object> query = session.createQuery(queryString);
-		query.setParameter("userlogin", (String) request.getAttribute("user"));
-	    return query.getResultList();
+		query.setParameter("customerid", id);
+	    return query.getResultList();	
+	    
 	}
+
 
 
 } 

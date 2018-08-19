@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.CustomerDAO;
+import open.com.dao.KycDAO;
 import open.com.model.CustomerModel;
+import open.com.model.KycModel;
 
 @RestController
 @Scope("request")
@@ -24,6 +26,10 @@ public class CustomerController {
 	@Autowired
 	@Qualifier("CustomerBusiness")
 	private CustomerDAO x;
+	
+	@Autowired
+	@Qualifier("KycBusiness")
+	private KycDAO y;
 	
 	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {	
@@ -47,4 +53,9 @@ public class CustomerController {
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
 				
+	@RequestMapping(value = "/customers/{id}/kyc" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> getKyc(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(y.getKycFromCustomer(id) );
+	}
+
 }

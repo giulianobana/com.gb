@@ -29,7 +29,7 @@ public class DelegationController {
 	
 	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getDelegation(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.getEntity(id , CustomerModel.class) );
+		return ResponseEntity.ok(x.getEntity(id , DelegationModel.class) );
 	}
 	
 	//create
@@ -49,5 +49,8 @@ public class DelegationController {
 	public  ResponseEntity<Object> update(@RequestBody DelegationModel p) {	
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
-				
+	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.DELETE)
+	public  ResponseEntity<Object> delete(@PathVariable("id") int id) {	
+	return ResponseEntity.ok(x.deleteEntity(id, DelegationModel.class));
+	}				
 }
