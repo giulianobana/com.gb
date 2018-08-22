@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import open.com.model.CustomerModel;
+import open.com.model.DelegationModel;
+import open.com.model.KycModel;
 import open.com.model.ResponseObject;
 import open.com.model.ResponseObject.Messages;
 
@@ -101,7 +105,25 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		response.addError(errore);
 		
 	}
-	
+	//searchbycustomer
+	@Override
+	public Object searchEntityByCustomer(int id , Class<?> classe ) {
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    String queryString =  "Select e from " + classe.getName() + " e " 
+	    		+ " , " +  CustomerModel.class.getName() + " cus" +
+	    		" where cus.id=e.customerid and  e.customerid = :customerid " +	
+	    		" and ( cus.creator=:userlogin or"
+	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+	    	             " r where r.delegatedUser =:userlogin) )";
+		Query<Object> query = session.createQuery(queryString);
+		query.setParameter("customerid", id);
+		query.setParameter("userlogin", (String) request.getAttribute("user"));
+
+	    return query.getResultList();	
+	    
+	}
+
 	// errore on create
 	public boolean onCreateChecks(ResponseObject res , Object o) {
 		return false;

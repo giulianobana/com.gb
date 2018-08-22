@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import open.com.model.AccountModel;
 import open.com.model.CustomerModel;
 import open.com.model.DelegationModel;
-import open.com.model.KycModel;
 
 
-@Component("KycDAOImpl")
-public class KycDAOImpl extends AccessDAOImpl implements KycDAO {
+@Component("AccountDAOImpl")
+public class AccountDAOImpl extends AccessDAOImpl implements AccountDAO {
 
 
 } 

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import open.com.dao.AccountDAO;
 import open.com.dao.CustomerDAO;
 import open.com.dao.KycDAO;
+import open.com.model.AccountModel;
 import open.com.model.CustomerModel;
 import open.com.model.KycModel;
 
@@ -30,6 +32,10 @@ public class CustomerController {
 	@Autowired
 	@Qualifier("KycBusiness")
 	private KycDAO y;
+
+	@Autowired
+	@Qualifier("AccountBusiness")
+	private AccountDAO z;
 	
 	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {	
@@ -55,7 +61,13 @@ public class CustomerController {
 				
 	@RequestMapping(value = "/customers/{id}/kyc" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> getKyc(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(y.getKycFromCustomer(id) );
-	}
+	//	return ResponseEntity.ok(y.getKycFromCustomer(id) );
+		return ResponseEntity.ok(x.searchEntityByCustomer(id, KycModel.class) );
 
+	}
+	
+	@RequestMapping(value = "/customers/{id}/accounts" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> getAccount(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(x.searchEntityByCustomer(id, AccountModel.class) );
+	}
 }
