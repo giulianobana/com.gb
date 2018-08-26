@@ -34,6 +34,7 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
+	    
 	    Object h = session.get(classe , id);
 	    
 	    session.getTransaction().commit();

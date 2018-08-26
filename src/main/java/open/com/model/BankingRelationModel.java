@@ -10,16 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="BANKINGRELATION")
@@ -35,7 +34,7 @@ public class BankingRelationModel {
 	private int customerid;
 	
 	@Column(nullable = false) 
-	private int product;
+	private int productid;
 	
 	@Column(nullable = false) 
 	private boolean active;
@@ -52,7 +51,16 @@ public class BankingRelationModel {
 	@OneToMany(mappedBy="bankingRelation", fetch = FetchType.EAGER)
 	private List<AccountModel> accounts;	
 
-	
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JsonIgnoreProperties
+//    @JoinColumn(name = "productid" , insertable=false ,  updatable = false)
+//	private ProductModel productDescription;
+//	
+//	
+//	public String getProductDescription() {
+//		return productDescription.getDescription();
+//	}
+
 	public int getId() {
 		return id;
 	}
@@ -69,12 +77,14 @@ public class BankingRelationModel {
 		this.customerid = customerid;
 	}
 
-	public int getProduct() {
-		return product;
+
+	
+	public int getProductid() {
+		return productid;
 	}
 
-	public void setProduct(int product) {
-		this.product = product;
+	public void setProductid(int productid) {
+		this.productid = productid;
 	}
 
 	public boolean isActive() {
