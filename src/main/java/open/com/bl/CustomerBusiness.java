@@ -3,7 +3,6 @@ package open.com.bl;
 import org.springframework.stereotype.Component;
 
 import open.com.dao.CustomerDAOImpl;
-import open.com.model.Auth0User;
 import open.com.model.CustomerModel;
 import open.com.model.ResponseObject;
 
@@ -38,7 +37,7 @@ public class CustomerBusiness extends CustomerDAOImpl {
 		// setting user
 		
 		if (customer.getNickname() != (String) request.getAttribute("user")) {
-			addErrorMessage(response , "ERROR" , "400" , "User Name cannot be changed");
+			addErrorMessage(response , "WARNING" , "400" , "Creator has not been modified: not updatable field");
 		}
 
 		return sta;

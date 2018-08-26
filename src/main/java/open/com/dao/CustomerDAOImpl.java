@@ -24,7 +24,7 @@ public class CustomerDAOImpl extends AccessDAOImpl implements CustomerDAO {
 	    String queryString =  "Select e from " + CustomerModel.class.getName() + " e " +
              "where e.nickname like :searchName  and ( e.creator=:userlogin or"
              + " e.creator in ( select r.username from " + DelegationModel.class.getName() +
-             " r where r.delegatedUser =:userlogin) ) "
+             " r where r.delegatedTo =:userlogin) ) "
              + " order by e.nickname ";
 		Query<Object> query = session.createQuery(queryString);
 		query.setParameter("searchName", "%" + n + "%");

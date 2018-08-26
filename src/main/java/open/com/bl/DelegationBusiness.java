@@ -1,6 +1,6 @@
 package open.com.bl;
 
-import org.springframework.stereotype.Component;
+ import org.springframework.stereotype.Component;
 
 import open.com.dao.DelegationDAOImpl;
 import open.com.model.Auth0User;

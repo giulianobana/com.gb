@@ -6,9 +6,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +26,9 @@ public class KycModel {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+
 	
-	private int customerid;
+	private int  customerid;
 	
 	private String job;	
 	
@@ -36,6 +40,19 @@ public class KycModel {
 	
 	private int  maritalstatus;
 
+	private int  numberofkids;
+	
+	private String currentcar;
+	
+	private boolean pep;
+
+	
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customerid" , insertable = false , updatable = false)
+	private CustomerModel customer;
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -44,6 +61,7 @@ public class KycModel {
 		this.id = id;
 	}
 
+	
 	public int getCustomerid() {
 		return customerid;
 	}
@@ -90,6 +108,30 @@ public class KycModel {
 
 	public void setMaritalstatus(int maritalstatus) {
 		this.maritalstatus = maritalstatus;
+	}
+
+	public int getNumberofkids() {
+		return numberofkids;
+	}
+
+	public void setNumberofkids(int numberofkids) {
+		this.numberofkids = numberofkids;
+	}
+
+	public String getCurrentcar() {
+		return currentcar;
+	}
+
+	public void setCurrentcar(String currentcar) {
+		this.currentcar = currentcar;
+	}
+
+	public boolean isPep() {
+		return pep;
+	}
+
+	public void setPep(boolean pep) {
+		this.pep = pep;
 	}
 	
 }

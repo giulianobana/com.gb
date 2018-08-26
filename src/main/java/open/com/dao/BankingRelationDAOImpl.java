@@ -14,8 +14,8 @@ import open.com.model.CustomerModel;
 import open.com.model.DelegationModel;
 
 
-@Component("AccountDAOImpl")
-public class AccountDAOImpl extends AccessDAOImpl implements AccountDAO {
+@Component("BankingRelationDAOImpl")
+public class BankingRelationDAOImpl extends AccessDAOImpl implements BankingRelationDAO {
 
 
 } 

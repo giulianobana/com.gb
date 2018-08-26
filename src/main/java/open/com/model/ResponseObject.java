@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ResponseObject {
 
 	private Object object;
-	private List<Messages> errors = new ArrayList<>();
+	private List<Messages> messages = new ArrayList<>();
 	
 	public Object getObject() {
 		return object;
@@ -18,14 +18,17 @@ public class ResponseObject {
 	public void setObject(Object object) {
 		this.object = object;
 	}
-	public List<Messages> getErrors() {
-		return errors;
+
+	
+	public List<Messages> getMessages() {
+		return messages;
 	}
-	public void setErrors(List<Messages> errors) {
-		this.errors = errors;
+	
+	public void setMessages(List<Messages> messages) {
+		this.messages = messages;
 	}
-	public void addError(Messages error) {
-		this.errors.add(error) ;
+	public void addMessage(Messages error) {
+		this.messages.add(error) ;
 	}
 
 	public class  Messages {		

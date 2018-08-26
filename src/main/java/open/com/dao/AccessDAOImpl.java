@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
@@ -58,9 +59,12 @@ public abstract class AccessDAOImpl implements AccessDAO {
 				Object a = session.save(object);
 				session.getTransaction().commit();
 				addErrorMessage(response, "INFO", "200", "Resource successfully created");
-			} catch (ConstraintViolationException e) {
+			} catch (ConstraintViolationException e ) {
 				addErrorMessage(response, "ERROR", "400", e.getCause().getMessage());
 			}
+//			 catch (HibernateException he ) {
+//					addErrorMessage(response, "ERROR", "400", he.getMessage());
+//				}
 			session.close();
 		}
 		response.setObject(object);
@@ -68,9 +72,9 @@ public abstract class AccessDAOImpl implements AccessDAO {
 
 	}
 	
+	
 	public Object updateEntity(Object object) {
 		ResponseObject response = new ResponseObject();
-	
 		if (!onUpdateChecks(response , object)) {
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
@@ -80,7 +84,7 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		addErrorMessage(response, "INFO" , "200" , "Resource successfully created");
 		}
 		response.setObject(object);
-	    return object;
+	    return response;
 	}
 	
 	public Object deleteEntity(int id , Class<?> classe) {
@@ -90,24 +94,15 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    session.getTransaction().commit();
 	    session.close();	
 		ResponseObject response = new ResponseObject();
-		addErrorMessage(response, "INFO" , "200" , "Resource successfully created");
-		return id;
-	}
-	// adding error messages
-	public void addErrorMessage(ResponseObject  response , String level, String code , String message) {
-//		List<Messages> errors = new ArrayList<Messages>();
-		Messages errore = response.new Messages();
-		errore.setLevel(level);
-		errore.setCode(code);
-		errore.setMessage(message);
-//		errors.add(errore);
-//		response.setErrors(errors);	
-		response.addError(errore);
-		
+		addErrorMessage(response, "INFO" , "200" , "Resource successfully deleted");
+		response.setObject(id);
+		return response;
 	}
 	//searchbycustomer
 	@Override
 	public Object searchEntityByCustomer(int id , Class<?> classe ) {
+		ResponseObject response = new ResponseObject();
+
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
 	    String queryString =  "Select e from " + classe.getName() + " e " 
@@ -115,12 +110,14 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    		" where cus.id=e.customerid and  e.customerid = :customerid " +	
 	    		" and ( cus.creator=:userlogin or"
 	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
-	    	             " r where r.delegatedUser =:userlogin) )";
+	    	             " r where r.delegatedTo =:userlogin) )";
 		Query<Object> query = session.createQuery(queryString);
 		query.setParameter("customerid", id);
 		query.setParameter("userlogin", (String) request.getAttribute("user"));
 
-	    return query.getResultList();	
+		addErrorMessage(response, "INFO" , "200" , "Resource succesfully retrieved");
+		response.setObject(query.getResultList());
+		return response;	
 	    
 	}
 
@@ -137,4 +134,14 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	public boolean onUpdateChecks(ResponseObject res , Object o) {
 		return false;
 	}
+	// adding error messages
+	public void addErrorMessage(ResponseObject  response , String level, String code , String message) {
+		Messages errore = response.new Messages();
+		errore.setLevel(level);
+		errore.setCode(code);
+		errore.setMessage(message);
+		response.addMessage(errore);
+		
+	}
+
 }

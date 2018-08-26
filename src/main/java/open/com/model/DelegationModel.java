@@ -19,7 +19,9 @@ public class DelegationModel {
 	
 	
 	private String username;
-	private String delegatedUser;
+	
+	private String delegatedTo;
+	
 	public int getId() {
 		return id;
 	}
@@ -32,11 +34,11 @@ public class DelegationModel {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getDelegatedUser() {
-		return delegatedUser;
+	public String getDelegatedTo() {
+		return delegatedTo;
 	}
-	public void setDelegatedUser(String delegatedUser) {
-		this.delegatedUser = delegatedUser;
+	public void setDelegatedTo(String delegatedTo) {
+		this.delegatedTo = delegatedTo;
 	}
 	
 }
