@@ -1,11 +1,16 @@
-package open.com.model;
+package open.com.model.object;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import open.com.model.type.CardCircuitType;
+import open.com.model.type.CardType;
 
 @Entity
 @Table(name="CARD")
@@ -17,14 +22,17 @@ public class CardModel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(  updatable = false) 
 	private String cardnumber;
 	
 	private int accountid;
-	
-	private String type;
+
+	@Enumerated(EnumType.STRING)
+	private CardType type;
 
 	
-	private String circuit;
+	@Enumerated(EnumType.STRING)
+	private CardCircuitType circuit;
 
 
 	public int getId() {
@@ -57,22 +65,22 @@ public class CardModel {
 	}
 
 
-	public String getType() {
+	public CardType getType() {
 		return type;
 	}
 
 
-	public void setType(String type) {
+	public void setType(CardType type) {
 		this.type = type;
 	}
 
 
-	public String getCircuit() {
+	public CardCircuitType getCircuit() {
 		return circuit;
 	}
 
 
-	public void setCircuit(String circuit) {
+	public void setCircuit(CardCircuitType circuit) {
 		this.circuit = circuit;
 	}
 

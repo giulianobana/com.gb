@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import open.com.model.Auth0User;
+import open.com.model.object.Auth0User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
@@ -37,7 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
+    	
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("Authorization", new String(request.getHeader("Authorization")));
@@ -45,9 +45,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		URI url = new URI("https://gbproject.auth0.com/userinfo");
 		HttpEntity requestEntity = new HttpEntity<>(headers);
 		ResponseEntity<Auth0User> result = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Auth0User.class);
-		// StringUtils.isEmpty(password) || StringUtils.containsWhitespace(password)) {
-		// throw new Exception("Invalid User Id or Password. Please try again.");
-		// }
 		request.setAttribute("user", result.getBody().getEmail());
 		return true;
     }

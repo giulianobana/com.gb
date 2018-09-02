@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.ProductDAO;
-import open.com.model.ProductModel;
+import open.com.model.object.ProductModel;
 
 
 
@@ -41,7 +41,7 @@ public class ProductController {
 	//create
 	@RequestMapping(value = "/products/search" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.list());
+	return ResponseEntity.ok(x.listAll(ProductModel.class));
 	}
 	
 	@RequestMapping(value = "/products/{id}" ,  method = RequestMethod.PUT)

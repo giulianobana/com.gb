@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import open.com.model.CustomerModel;
-import open.com.model.DelegationModel;
-import open.com.model.ResponseObject;
-import open.com.model.ResponseObject.Messages;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.DelegationModel;
+import open.com.model.object.ResponseObject;
+import open.com.model.object.ResponseObject.Messages;
 
 @Component("DelegationDAOImpl")
 public class DelegationDAOImpl extends AccessDAOImpl implements DelegationDAO {
@@ -23,7 +23,7 @@ public class DelegationDAOImpl extends AccessDAOImpl implements DelegationDAO {
 	    session.beginTransaction();
 	    String queryString =  "Select e from " + DelegationModel.class.getName() + " e " +
              "where e.username = :userlogin "
-             + " order by e.delegatedUser ";
+             + " order by e.delegatedTo ";
 		Query<Object> query = session.createQuery(queryString);
 		query.setParameter("userlogin", (String) request.getAttribute("user"));
 	    return query.getResultList();

@@ -21,30 +21,17 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value(value = "${auth0.apiAudience}")
-    //@Value(value = "https://openbanking.com/api")
     private String apiAudience;
     @Value(value = "${auth0.issuer}")
-    // @Value(value = "https://gbproject.auth0.com/")
     private String issuer;
-
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-//        configuration.setAllowCredentials(true);
-//        configuration.addAllowedHeader("Authorization");
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       // http.cors();
-    	
         JwtWebSecurityConfigurer
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
-           .anyRequest().authenticated();     }  }  
+           .anyRequest().authenticated();     
+        } 
+    
+}  

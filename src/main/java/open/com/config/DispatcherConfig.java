@@ -22,7 +22,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"open.*"}) 
-@Import({HibernateConfig.class ,SecurityConfig.class })
+@Import({HibernateConfig.class ,SecurityConfig.class } )
+//@Import({HibernateConfig.class })
 public class DispatcherConfig implements  WebMvcConfigurer  {
 
 	// setting property file
@@ -44,6 +45,6 @@ public class DispatcherConfig implements  WebMvcConfigurer  {
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new  LoginInterceptor());
+       registry.addInterceptor(new  LoginInterceptor());
     }
 }

@@ -1,9 +1,11 @@
-package open.com.model;
+package open.com.model.object;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +15,11 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import open.com.model.type.CurrencyType;
+import open.com.model.type.SignType;
+
 @Entity
-@Table(name="TRANSACTION")
+@Table(name="CASHTRANSACTION")
 public class TransactionModel {
 
 	
@@ -25,10 +30,11 @@ public class TransactionModel {
 		
 	private int accountid;
 	
-	private String currency;
+	@Enumerated(EnumType.STRING)
+	private CurrencyType currency;
 
-	
-	private String sign;
+	@Enumerated(EnumType.STRING)
+	private SignType sign;
 
 	private int amount;
 	
@@ -55,19 +61,19 @@ public class TransactionModel {
 		this.accountid = accountid;
 	}
 
-	public String getCurrency() {
+	public CurrencyType getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
+	public void setCurrency(CurrencyType currency) {
 		this.currency = currency;
 	}
 
-	public String getSign() {
+	public SignType getSign() {
 		return sign;
 	}
 
-	public void setSign(String sign) {
+	public void setSign(SignType sign) {
 		this.sign = sign;
 	}
 

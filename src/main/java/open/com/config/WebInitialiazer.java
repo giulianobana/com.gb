@@ -15,9 +15,6 @@ public class WebInitialiazer implements WebApplicationInitializer  {
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 		  
-//	      XmlWebApplicationContext appContext = new XmlWebApplicationContext();
-//	      appContext.setConfigLocation("/WEB-INF/spring-mvc.xml");
-	      // Create the dispatcher servlet's Spring application context
 	      AnnotationConfigWebApplicationContext dispatcherContext =     new AnnotationConfigWebApplicationContext();
 	      dispatcherContext.register(DispatcherConfig.class);
 
@@ -28,30 +25,3 @@ public class WebInitialiazer implements WebApplicationInitializer  {
 	    
 	}
 }
-//
-//import org.springframework.web.servlet.support.*;
-//
-////public class MvcWebApplicationInitializer
-//    extends AbstractAnnotationConfigDispatcherServletInitializer {
-//
-//    @Override
-//    protected Class<?>[] getRootConfigClasses() {
-//        return null;
-//    }
-//
-//	@Override
-//	protected Class<?>[] getServletConfigClasses() {
-//		// TODO Auto-generated method stub
-//		return new Class[] {DispatcherConfig.class};
-//		
-//	}
-//
-//	@Override
-//	protected String[] getServletMappings() {
-//		// TODO Auto-generated method stub
-//		return new String[] {"/"};
-//	}
-//
-//    // ... other overrides ...
-//}
-

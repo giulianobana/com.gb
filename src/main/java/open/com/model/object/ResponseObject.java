@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("ResponseObject")
 public class ResponseObject {
 
 	private Object object;

@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.AccountDAO;
-import open.com.model.AccountModel;
+import open.com.dao.CardDAO;
+import open.com.dao.PaymentDAO;
+import open.com.model.object.AccountModel;
+import open.com.model.object.CardModel;
+import open.com.model.object.PaymentModel;
+import open.com.model.object.TransactionModel;
 
 
 
@@ -27,12 +32,35 @@ public class AccountController {
 	@Qualifier("AccountBusiness")
 	private AccountDAO x;
 	
+	@Autowired
+	@Qualifier("CardBusiness")
+	private CardDAO c;
+	
+	@Autowired
+	@Qualifier("PaymentBusiness")
+	private PaymentDAO p;
+
+	
 	@RequestMapping(value = "/accounts/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(x.getEntity(id , AccountModel.class) );
 	}
 	
-	//create
+	@RequestMapping(value = "/accounts/{id}/cards" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listCard(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(c.searchEntityByAccount(id, CardModel.class) );
+	}
+	
+	@RequestMapping(value = "/accounts/{id}/payments" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listPayments(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(p.searchEntityByAccount(id, PaymentModel.class) );
+	}
+	
+	@RequestMapping(value = "/accounts/{id}/cashtransactions" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listCash(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(p.searchEntityByAccount(id, TransactionModel.class) );
+	}
+	
 	@RequestMapping(value = "/accounts/" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> add(@RequestBody AccountModel p) {	
 	return ResponseEntity.ok(x.createEntity(p));

@@ -1,9 +1,11 @@
-package open.com.model;
+package open.com.model.object;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +15,11 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import open.com.model.type.CurrencyType;
+import open.com.model.type.FrequencyType;
+
 @Entity
-@Table(name="PAYMENT")
+@Table(name="PAYMENTORDER")
 public class PaymentModel {
 
 	
@@ -27,11 +32,15 @@ public class PaymentModel {
 
 	
 	private String IBAN;
+	
+	private String beneficiary;
 
-	private String currency;
+	@Enumerated(EnumType.STRING)
+	private CurrencyType currency;
 
 	
-	private String frequency;
+	@Enumerated(EnumType.STRING)
+	private FrequencyType frequency;
 
 	private int amount;
 	
@@ -66,19 +75,19 @@ public class PaymentModel {
 		IBAN = iBAN;
 	}
 
-	public String getCurrency() {
+	public CurrencyType getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
+	public void setCurrency(CurrencyType currency) {
 		this.currency = currency;
 	}
 
-	public String getFrequency() {
+	public FrequencyType getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(String frequency) {
+	public void setFrequency(FrequencyType frequency) {
 		this.frequency = frequency;
 	}
 
@@ -104,6 +113,14 @@ public class PaymentModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getBeneficiary() {
+		return beneficiary;
+	}
+
+	public void setBeneficiary(String beneficiary) {
+		this.beneficiary = beneficiary;
 	}
 
 		

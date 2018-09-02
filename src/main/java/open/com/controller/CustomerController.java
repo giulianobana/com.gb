@@ -2,6 +2,7 @@ package open.com.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -14,25 +15,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import open.com.dao.AccessDAOImpl;
 import open.com.dao.CustomerDAO;
 import open.com.dao.KycDAO;
-import open.com.model.BankingRelationModel;
-import open.com.model.CustomerModel;
-import open.com.model.KycModel;
+import open.com.model.object.BankingRelationModel;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.KycModel;
 
 @RestController
 @Scope("request")
 public class CustomerController {
-
+//	private static org.apache.log4j.Logger log = Logger.getLogger(CustomerController.class);
+	
 	@Autowired
 	@Qualifier("CustomerBusiness")
 	private CustomerDAO x;
 	
 	
-	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.getEntity(id , CustomerModel.class) );
-	}
+//	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.GET)
+//	public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {	
+//		 return ResponseEntity.ok(x.getEntity(id , CustomerModel.class) );
+//	}
 	
 	//create
 	@RequestMapping(value = "/customers/" ,  method = RequestMethod.POST)
@@ -51,9 +54,4 @@ public class CustomerController {
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
 				
-	
-	@RequestMapping(value = "/customers/{id}/bankingrelations" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> getAccount(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.searchEntityByCustomer(id, BankingRelationModel.class) );
-	}
 }

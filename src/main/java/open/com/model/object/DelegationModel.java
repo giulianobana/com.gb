@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PRODUCT")
-public class ProductModel {
+@Table(name="DELEGATION")
+public class DelegationModel {
 
 	
 	@Id
@@ -18,28 +18,27 @@ public class ProductModel {
 	private int id;
 	
 	
-	private String description;
-
-
+	private String username;
+	
+	private String delegatedTo;
+	
 	public int getId() {
 		return id;
 	}
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-	public String getDescription() {
-		return description;
+	public String getUsername() {
+		return username;
 	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
-	
+	public String getDelegatedTo() {
+		return delegatedTo;
+	}
+	public void setDelegatedTo(String delegatedTo) {
+		this.delegatedTo = delegatedTo;
+	}
 	
 }

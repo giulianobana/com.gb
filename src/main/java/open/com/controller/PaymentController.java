@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.PaymentDAO;
-import open.com.model.PaymentModel;
+import open.com.model.object.PaymentModel;
 
 
 
@@ -41,7 +41,7 @@ public class PaymentController {
 	//create
 	@RequestMapping(value = "/payments/search" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.list());
+	return ResponseEntity.ok(x.listAll(PaymentModel.class));
 	}
 	
 	@RequestMapping(value = "/payments/{id}" ,  method = RequestMethod.PUT)

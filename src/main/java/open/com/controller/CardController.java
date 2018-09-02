@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.CardDAO;
-import open.com.model.CardModel;
+import open.com.model.object.CardModel;
+import open.com.model.object.TransactionModel;
 
 
 
@@ -38,10 +39,9 @@ public class CardController {
 	return ResponseEntity.ok(x.createEntity(p));
 	}
 	
-	//create
 	@RequestMapping(value = "/cards/search" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.list());
+	public  ResponseEntity<Object> search() {	
+	return ResponseEntity.ok(x.listAll(CardModel.class));
 	}
 	
 	@RequestMapping(value = "/cards/{id}" ,  method = RequestMethod.PUT)

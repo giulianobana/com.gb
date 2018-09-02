@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.CustomerDAO;
 import open.com.dao.DelegationDAO;
-import open.com.model.CustomerModel;
-import open.com.model.DelegationModel;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.DelegationModel;
 
 @RestController
 @Scope("request")
@@ -27,10 +27,10 @@ public class DelegationController {
 	@Qualifier("DelegationBusiness")
 	private DelegationDAO x;
 	
-	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> getDelegation(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.getEntity(id , DelegationModel.class) );
-	}
+//	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.GET)
+//	public ResponseEntity<Object> getDelegation(@PathVariable("id") int id) {	
+//		return ResponseEntity.ok(x.getEntity(id , DelegationModel.class) );
+//	}
 	
 	//create
 	@RequestMapping(value = "/delegations/" ,  method = RequestMethod.POST)
@@ -45,10 +45,11 @@ public class DelegationController {
 	}
 	
 	
-	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.PUT)
-	public  ResponseEntity<Object> update(@RequestBody DelegationModel p) {	
-	return ResponseEntity.ok(x.updateEntity(p));
-	}
+//	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.PUT)
+//	public  ResponseEntity<Object> update(@RequestBody DelegationModel p) {	
+//	return ResponseEntity.ok(x.updateEntity(p));
+//	}
+	
 	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.DELETE)
 	public  ResponseEntity<Object> delete(@PathVariable("id") int id) {	
 	return ResponseEntity.ok(x.deleteEntity(id, DelegationModel.class));

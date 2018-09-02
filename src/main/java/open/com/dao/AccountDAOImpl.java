@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import open.com.model.CustomerModel;
-import open.com.model.DelegationModel;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.DelegationModel;
 
 
 @Component("AccountDAOImpl")

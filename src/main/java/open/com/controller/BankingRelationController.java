@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.BankingRelationDAO;
-import open.com.model.BankingRelationModel;
+import open.com.dao.CardDAO;
+import open.com.model.object.BankingRelationModel;
 
 
 
@@ -27,11 +28,12 @@ public class BankingRelationController {
 	@Qualifier("BankingRelationBusiness")
 	private BankingRelationDAO x;
 	
+	
 	@RequestMapping(value = "/bankingrelations/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(x.getEntity(id , BankingRelationModel.class) );
 	}
-	
+
 	//create
 	@RequestMapping(value = "/bankingrelations/" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> add(@RequestBody BankingRelationModel p) {	

@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 public class Auth0User {
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,13 +15,17 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import open.com.model.CustomerModel;
-import open.com.model.DelegationModel;
-import open.com.model.KycModel;
-import open.com.model.ResponseObject;
-import open.com.model.ResponseObject.Messages;
+import open.com.model.object.AccountModel;
+import open.com.model.object.BankingRelationModel;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.DelegationModel;
+import open.com.model.object.KycModel;
+import open.com.model.object.ResponseObject;
+import open.com.model.object.TransactionModel;
+import open.com.model.object.ResponseObject.Messages;
 
 public abstract class AccessDAOImpl implements AccessDAO {
+	private static org.apache.log4j.Logger log = Logger.getLogger(AccessDAOImpl.class);
 
 	
 	@Autowired
@@ -36,7 +41,6 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    session.beginTransaction();
 	    
 	    Object h = session.get(classe , id);
-	    
 	    session.getTransaction().commit();
 	    session.close();
 	    response.setObject(h);
@@ -45,7 +49,6 @@ public abstract class AccessDAOImpl implements AccessDAO {
 			response.setObject(null);
 	    }else			addErrorMessage(response, "INFO" , "200" , "Resource succesfully retrieved");
 
-	    
 		return response;
 	}
 
@@ -99,11 +102,11 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		response.setObject(id);
 		return response;
 	}
+
 	//searchbycustomer
 	@Override
 	public Object searchEntityByCustomer(int id , Class<?> classe ) {
 		ResponseObject response = new ResponseObject();
-
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
 	    String queryString =  "Select e from " + classe.getName() + " e " 
@@ -119,7 +122,45 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		addErrorMessage(response, "INFO" , "200" , "Resource succesfully retrieved");
 		response.setObject(query.getResultList());
 		return response;	
-	    
+	}
+	// search account
+	@Override
+	public Object searchEntityByAccount(int id , Class<?> classe ) {
+		ResponseObject response = new ResponseObject();
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    String queryString =  "Select e from " + classe.getName() + " e " 
+	    		+ " , " +  CustomerModel.class.getName() + " cus " +
+	    		 " , " +  BankingRelationModel.class.getName() + " br " +
+	    		" , " +  AccountModel.class.getName() + " acc " + 
+	    		" where e.accountid=acc.id and "
+	    		+ " br.id=acc.bankingrelationid and "
+	    		+ " cus.id=br.customerid "
+	    		+ " and  e.accountid = :accountid " +	
+	    		" and ( cus.creator=:userlogin or"
+	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+	    	             " r where r.delegatedTo =:userlogin) )";
+		Query<Object> query = session.createQuery(queryString);
+		query.setParameter("accountid", id);
+		query.setParameter("userlogin", (String) request.getAttribute("user"));
+
+		addErrorMessage(response, "INFO" , "200" , "Resource succesfully retrieved");
+		response.setObject(query.getResultList());
+		return response;	
+	}
+	
+	
+	//list all
+	@Override
+	public List<Object> listAll(Class<?> classe) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    String queryString =  "Select e from " + classe.getName() + " e " 
+             + " order by e.id ";
+		Query<Object> query = session.createQuery(queryString);
+	    return query.getResultList();
+
 	}
 
 	// errore on create

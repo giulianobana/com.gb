@@ -1,0 +1,7 @@
+################### JDBC Configuration per mysql local##########################
+jdbc.driverClassName=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/openbanking
+jdbc.database=openbanking
+jdbc.username=root
+jdbc.password=root
+

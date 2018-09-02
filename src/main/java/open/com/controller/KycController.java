@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.KycDAO;
-import open.com.model.KycModel;
+import open.com.model.object.KycModel;
 
 @RestController
 @Scope("request")

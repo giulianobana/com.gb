@@ -6,12 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import open.com.model.object.PaymentModel;
+import open.com.model.object.TransactionModel;
 
 
 
-@Component("PaymentDAOImpl")
-public class PaymentDAOImpl extends AccessDAOImpl implements PaymentDAO {
+@Component("CashTransactionDAOImpl")
+public class CashTransactionDAOImpl extends AccessDAOImpl implements CashTransactionDAO {
 
 
 

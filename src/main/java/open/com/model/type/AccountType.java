@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.type;
 
 public enum AccountType {
 

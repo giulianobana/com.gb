@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 
 
@@ -42,7 +42,7 @@ public class KycModel {
 
 	private int  numberofkids;
 	
-	private String currentcar;
+	private int numberofcar;
 	
 	private boolean pep;
 
@@ -118,12 +118,13 @@ public class KycModel {
 		this.numberofkids = numberofkids;
 	}
 
-	public String getCurrentcar() {
-		return currentcar;
+
+	public int getNumberofcar() {
+		return numberofcar;
 	}
 
-	public void setCurrentcar(String currentcar) {
-		this.currentcar = currentcar;
+	public void setNumberofcar(int numberofcar) {
+		this.numberofcar = numberofcar;
 	}
 
 	public boolean isPep() {

@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 import java.util.Date;
 
@@ -16,7 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import open.com.model.type.*;
 
 @Entity
 @Table(name="ACCOUNT")
@@ -39,9 +43,12 @@ public class AccountModel {
 	@Enumerated(EnumType.STRING)
 	private AccountType type;
 	
+	
+	@Column( updatable = false) 
 	private String iban;
 	
-	private String currency;
+	@Enumerated(EnumType.STRING)
+	private CurrencyType currency;
 	
 	private boolean active;
 	
@@ -87,10 +94,10 @@ public class AccountModel {
 	public void setOpeningDate(Date openingDate) {
 		this.openingDate = openingDate;
 	}
-	public String getCurrency() {
+	public CurrencyType getCurrency() {
 		return currency;
 	}
-	public void setCurrency(String currency) {
+	public void setCurrency(CurrencyType currency) {
 		this.currency = currency;
 	}
 

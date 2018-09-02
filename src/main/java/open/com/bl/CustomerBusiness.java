@@ -3,8 +3,8 @@ package open.com.bl;
 import org.springframework.stereotype.Component;
 
 import open.com.dao.CustomerDAOImpl;
-import open.com.model.CustomerModel;
-import open.com.model.ResponseObject;
+import open.com.model.object.CustomerModel;
+import open.com.model.object.ResponseObject;
 
 
 @Component("CustomerBusiness")

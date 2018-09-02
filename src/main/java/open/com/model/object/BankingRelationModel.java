@@ -1,4 +1,4 @@
-package open.com.model;
+package open.com.model.object;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -49,6 +51,7 @@ public class BankingRelationModel {
 	private CustomerModel customer;
 	
 	@OneToMany(mappedBy="bankingRelation", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<AccountModel> accounts;	
 
 //	@OneToOne(fetch = FetchType.LAZY)
