@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.PaymentDAO;
+import open.com.model.object.CardModel;
 import open.com.model.object.PaymentModel;
+import open.com.model.type.Criteria;
 
 
 
@@ -43,6 +45,12 @@ public class PaymentController {
 	public  ResponseEntity<Object> list() {	
 	return ResponseEntity.ok(x.listAll(PaymentModel.class));
 	}
+	
+	@RequestMapping(value = "/payments/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( PaymentModel.class , search));
+	}	
 	
 	@RequestMapping(value = "/payments/{id}" ,  method = RequestMethod.PUT)
 	public  ResponseEntity<Object> update(@RequestBody PaymentModel p) {	

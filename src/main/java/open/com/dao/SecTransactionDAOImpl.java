@@ -10,8 +10,8 @@ import open.com.model.object.CashTransactionModel;
 
 
 
-@Component("CashTransactionDAOImpl")
-public class CashTransactionDAOImpl extends AccessDAOImpl implements CashTransactionDAO {
+@Component("SecTransactionDAOImpl")
+public class SecTransactionDAOImpl extends AccessDAOImpl implements SecTransactionDAO {
 
 
 

@@ -1,16 +1,21 @@
 package open.com.dao;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +26,10 @@ import open.com.model.object.CustomerModel;
 import open.com.model.object.DelegationModel;
 import open.com.model.object.KycModel;
 import open.com.model.object.ResponseObject;
-import open.com.model.object.TransactionModel;
+import open.com.model.object.CashTransactionModel;
 import open.com.model.object.ResponseObject.Messages;
+import open.com.model.type.Criteria;
+import open.com.model.type.Search;
 
 public abstract class AccessDAOImpl implements AccessDAO {
 	private static org.apache.log4j.Logger log = Logger.getLogger(AccessDAOImpl.class);
@@ -66,9 +73,6 @@ public abstract class AccessDAOImpl implements AccessDAO {
 			} catch (ConstraintViolationException e ) {
 				addErrorMessage(response, "ERROR", "400", e.getCause().getMessage());
 			}
-//			 catch (HibernateException he ) {
-//					addErrorMessage(response, "ERROR", "400", he.getMessage());
-//				}
 			session.close();
 		}
 		response.setObject(object);
@@ -162,7 +166,42 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    return query.getResultList();
 
 	}
+    // 
+	@Override
+	public Object listAll(Class<?> classe , Criteria search) {
+		// TODO Auto-generated method stub 
+		ResponseObject response = new ResponseObject();
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    StringBuilder outputBuilder = new StringBuilder("");
+	    
+	    outputBuilder.append("Select e from " + classe.getName() + " e  where 1=1 " );
+	    
+		if (search != null) {
+			for (Search s1 : search.getFilter()) {
+				outputBuilder
+						.append(
+								(s1.getAndOr() != null ? s1.getAndOr() : " and ") 
+								+ " " + s1.getAttribute() + " " + s1.getOperator() + " " + s1.getValue() + " ");
+			}
+		}
+	    
+	    String queryString = outputBuilder.toString() + " order by  " + 
+	    (search.getSorting() !=	 null ? search.getSorting() : "id desc" );
+	    
+		try   {
+			Query<Object> query = session.createQuery(queryString);
+			response.setObject(query.getResultList());
+		} catch (IllegalArgumentException  e ) {
+			addErrorMessage(response, "ERROR", "400", e.getCause().getMessage());
+			
+		} 
+//	
+		
+	    return response;
 
+	}
+	
 	// errore on create
 	public boolean onCreateChecks(ResponseObject res , Object o) {
 		return false;

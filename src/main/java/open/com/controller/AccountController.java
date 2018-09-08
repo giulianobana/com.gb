@@ -18,9 +18,12 @@ import open.com.dao.AccountDAO;
 import open.com.dao.CardDAO;
 import open.com.dao.PaymentDAO;
 import open.com.model.object.AccountModel;
+import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CardModel;
 import open.com.model.object.PaymentModel;
-import open.com.model.object.TransactionModel;
+import open.com.model.object.SecTransactionModel;
+import open.com.model.type.Criteria;
+import open.com.model.object.CashTransactionModel;
 
 
 
@@ -58,8 +61,25 @@ public class AccountController {
 	
 	@RequestMapping(value = "/accounts/{id}/cashtransactions" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> listCash(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(p.searchEntityByAccount(id, TransactionModel.class) );
+		return ResponseEntity.ok(p.searchEntityByAccount(id, CashTransactionModel.class) );
 	}
+
+	@RequestMapping(value = "/accounts/{id}/sectransactions" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listSec(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(p.searchEntityByAccount(id, SecTransactionModel.class) );
+	}
+	
+	
+	@RequestMapping(value = "/accounts/{id}/balancecash" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listBalanceCash(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(x.getCashBalance(id) );
+	}
+	
+	@RequestMapping(value = "/accounts/{id}/balancesec" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listBalanceSec(@PathVariable("id") int id) {	
+		return ResponseEntity.ok(x.getSecPositions(id) );
+	}
+		
 	
 	@RequestMapping(value = "/accounts/" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> add(@RequestBody AccountModel p) {	
@@ -71,4 +91,9 @@ public class AccountController {
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
 	
+	@RequestMapping(value = "/accounts/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( AccountModel.class , search));
+	}		
 }

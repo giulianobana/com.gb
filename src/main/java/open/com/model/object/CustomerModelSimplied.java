@@ -20,9 +20,9 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity(name = "CustomerModel")
+@Entity(name = "CustomerModelSimplied")
 @Table(name="CUSTOMER")
-public class CustomerModel {
+public class CustomerModelSimplied {
 
 	@Id
 	@Column(name="id")
@@ -69,9 +69,9 @@ public class CustomerModel {
 	private List<BankingRelationModel> bankingRelations;	
 	
 	
-	public List<BankingRelationModel> getBankingRelations() {
-		return bankingRelations;
-	}
+//	public List<BankingRelationModel> getBankingRelations() {
+//		return bankingRelations;
+//	}
 
 	public KycModel getKyc() {
 		return kyc;

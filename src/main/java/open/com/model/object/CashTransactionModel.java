@@ -20,7 +20,7 @@ import open.com.model.type.SignType;
 
 @Entity
 @Table(name="CASHTRANSACTION")
-public class TransactionModel {
+public class CashTransactionModel {
 
 	
 	@Id

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import open.com.dao.BankingRelationDAO;
 import open.com.dao.CardDAO;
 import open.com.model.object.BankingRelationModel;
+import open.com.model.object.KycModel;
+import open.com.model.type.Criteria;
 
 
 
@@ -45,4 +47,9 @@ public class BankingRelationController {
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
 	
+	@RequestMapping(value = "/bankingrelations/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( BankingRelationModel.class , search));
+	}	
 }

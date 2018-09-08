@@ -18,6 +18,7 @@ import open.com.dao.CustomerDAO;
 import open.com.dao.DelegationDAO;
 import open.com.model.object.CustomerModel;
 import open.com.model.object.DelegationModel;
+import open.com.model.type.Criteria;
 
 @RestController
 @Scope("request")
@@ -53,5 +54,12 @@ public class DelegationController {
 	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.DELETE)
 	public  ResponseEntity<Object> delete(@PathVariable("id") int id) {	
 	return ResponseEntity.ok(x.deleteEntity(id, DelegationModel.class));
-	}				
+	}		
+	
+	// search delegated not secured
+	@RequestMapping(value = "/delegations/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( DelegationModel.class , search));
+	}
 }

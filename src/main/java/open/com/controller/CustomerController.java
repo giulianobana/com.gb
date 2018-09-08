@@ -1,5 +1,8 @@
 package open.com.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -20,7 +23,10 @@ import open.com.dao.CustomerDAO;
 import open.com.dao.KycDAO;
 import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CustomerModel;
+import open.com.model.object.CustomerModelSimplied;
 import open.com.model.object.KycModel;
+import open.com.model.type.Criteria;
+import open.com.model.type.Search;
 
 @RestController
 @Scope("request")
@@ -47,6 +53,19 @@ public class CustomerController {
 	@RequestMapping(value = "/customers" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> searchByName(@RequestParam("nickname") String p) {	
 	return ResponseEntity.ok(x.searchCustomerByName(p));
+	}
+	
+	// searchByName
+	@RequestMapping(value = "/customers/all" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> searchAll() {	
+	return ResponseEntity.ok(x.listAll( CustomerModelSimplied.class));
+	}
+	
+	// searchByName
+	@RequestMapping(value = "/customers/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( CustomerModel.class , search));
 	}
 	
 	@RequestMapping(value = "/customers/{id}" ,  method = RequestMethod.PUT)

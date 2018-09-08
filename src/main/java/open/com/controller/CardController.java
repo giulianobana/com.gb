@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.dao.CardDAO;
+import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CardModel;
-import open.com.model.object.TransactionModel;
+import open.com.model.object.CashTransactionModel;
+import open.com.model.type.Criteria;
 
 
 
@@ -48,5 +50,11 @@ public class CardController {
 	public  ResponseEntity<Object> update(@RequestBody CardModel p) {	
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
+	
+	@RequestMapping(value = "/cards/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.listAll( CardModel.class , search));
+	}	
 	
 }
