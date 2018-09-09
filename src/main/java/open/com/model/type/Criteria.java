@@ -6,6 +6,14 @@ public class Criteria {
 
 	private ArrayList<Search> filter;
 	private String sorting;
+	private boolean unSecured;
+	
+	
+	
+	public boolean isUnSecured() {
+		return unSecured;
+	}
+
 
 	public ArrayList<Search> getFilter() {
 		return filter;

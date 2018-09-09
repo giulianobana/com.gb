@@ -2,12 +2,12 @@ package open.com.bl;
 
 import org.springframework.stereotype.Component;
 
-import open.com.dao.PaymentDAOImpl;
+import open.com.dao.AccessDAOImpl;
 
 
 
  @Component("PaymentBusiness")
-	public class PaymentBusiness extends PaymentDAOImpl {
+	public class PaymentBusiness extends AccessDAOImpl {
 
 	}
 

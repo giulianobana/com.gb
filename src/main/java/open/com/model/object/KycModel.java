@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import open.com.model.type.JobType;
 
 @Entity
 @Table(name="KNOWYOURCUSTOMER")
@@ -30,7 +34,8 @@ public class KycModel {
 	
 	private int  customerid;
 	
-	private String job;	
+	@Enumerated(EnumType.STRING)
+	private JobType job;	
 	
 	private int  annualIncome;
 	
@@ -46,6 +51,7 @@ public class KycModel {
 	
 	private boolean pep;
 
+	private boolean houseHolder;
 	
 	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerid" , insertable = false , updatable = false)
@@ -70,11 +76,11 @@ public class KycModel {
 		this.customerid = customerid;
 	}
 
-	public String getJob() {
+	public JobType getJob() {
 		return job;
 	}
 
-	public void setJob(String job) {
+	public void setJob(JobType job) {
 		this.job = job;
 	}
 
@@ -133,6 +139,14 @@ public class KycModel {
 
 	public void setPep(boolean pep) {
 		this.pep = pep;
+	}
+
+	public boolean isHouseHolder() {
+		return houseHolder;
+	}
+
+	public void setHouseHolder(boolean houseHolder) {
+		this.houseHolder = houseHolder;
 	}
 	
 }

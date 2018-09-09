@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import open.com.bl.AccountBusiness;
+import open.com.bl.CardBusiness;
+import open.com.bl.PaymentBusiness;
 import open.com.dao.AccountDAO;
-import open.com.dao.CardDAO;
-import open.com.dao.PaymentDAO;
 import open.com.model.object.AccountModel;
 import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CardModel;
@@ -33,15 +34,15 @@ public class AccountController {
 
 	@Autowired
 	@Qualifier("AccountBusiness")
-	private AccountDAO x;
+	private AccountBusiness x;
 	
 	@Autowired
 	@Qualifier("CardBusiness")
-	private CardDAO c;
+	private CardBusiness c;
 	
 	@Autowired
 	@Qualifier("PaymentBusiness")
-	private PaymentDAO p;
+	private PaymentBusiness p;
 
 	
 	@RequestMapping(value = "/accounts/{id}" ,  method = RequestMethod.GET)
@@ -49,6 +50,26 @@ public class AccountController {
 		return ResponseEntity.ok(x.getEntity(id , AccountModel.class) );
 	}
 	
+	
+	@RequestMapping(value = "/accounts/" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> add(@RequestBody AccountModel p) {	
+	return ResponseEntity.ok(x.createEntity(p));
+	}
+	
+	@RequestMapping(value = "/accounts/{id}" ,  method = RequestMethod.PUT)
+	public  ResponseEntity<Object> update(@RequestBody AccountModel p) {	
+	return ResponseEntity.ok(x.updateEntity(p));
+	}
+	
+//	/*search */ 
+	@RequestMapping(value = "/accounts/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.searchEntity(AccountModel.class , search , "bankingrelation"));
+	}		
+	
+	
+ /* external entities by account id */
 	@RequestMapping(value = "/accounts/{id}/cards" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> listCard(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(c.searchEntityByAccount(id, CardModel.class) );
@@ -69,7 +90,6 @@ public class AccountController {
 		return ResponseEntity.ok(p.searchEntityByAccount(id, SecTransactionModel.class) );
 	}
 	
-	
 	@RequestMapping(value = "/accounts/{id}/balancecash" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> listBalanceCash(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(x.getCashBalance(id) );
@@ -79,21 +99,4 @@ public class AccountController {
 	public ResponseEntity<Object> listBalanceSec(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(x.getSecPositions(id) );
 	}
-		
-	
-	@RequestMapping(value = "/accounts/" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> add(@RequestBody AccountModel p) {	
-	return ResponseEntity.ok(x.createEntity(p));
-	}
-	
-	@RequestMapping(value = "/accounts/{id}" ,  method = RequestMethod.PUT)
-	public  ResponseEntity<Object> update(@RequestBody AccountModel p) {	
-	return ResponseEntity.ok(x.updateEntity(p));
-	}
-	
-	@RequestMapping(value = "/accounts/search" ,  method = RequestMethod.POST ,
-			 consumes = "application/json")
-	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( AccountModel.class , search));
-	}		
 }

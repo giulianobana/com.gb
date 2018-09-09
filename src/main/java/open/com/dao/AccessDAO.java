@@ -13,12 +13,14 @@ public interface AccessDAO {
 	public Object createEntity(Object object);
 	public Object updateEntity(Object object);
 	public Object deleteEntity(int id , Class<?> classe);
-	// No security
-	public Object listAll(Class<?> classe);
-	public Object listAll(Class<?> classe , Criteria search);
+
 	
 	//filter based security
 	public Object searchEntityByCustomer(int id , Class<?> classe);
+	
 	public Object searchEntityByAccount(int id , Class<?> classe);
+	
+	public Object searchEntity(Class<?> classe , Criteria search , String level);
+
 	
 }

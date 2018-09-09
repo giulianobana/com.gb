@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import open.com.bl.DelegationBusiness;
 import open.com.dao.CustomerDAO;
 import open.com.dao.DelegationDAO;
 import open.com.model.object.CustomerModel;
@@ -26,12 +27,7 @@ public class DelegationController {
 
 	@Autowired
 	@Qualifier("DelegationBusiness")
-	private DelegationDAO x;
-	
-//	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.GET)
-//	public ResponseEntity<Object> getDelegation(@PathVariable("id") int id) {	
-//		return ResponseEntity.ok(x.getEntity(id , DelegationModel.class) );
-//	}
+	private DelegationBusiness x;
 	
 	//create
 	@RequestMapping(value = "/delegations/" ,  method = RequestMethod.POST)
@@ -46,20 +42,15 @@ public class DelegationController {
 	}
 	
 	
-//	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.PUT)
-//	public  ResponseEntity<Object> update(@RequestBody DelegationModel p) {	
-//	return ResponseEntity.ok(x.updateEntity(p));
-//	}
-	
 	@RequestMapping(value = "/delegations/{id}" ,  method = RequestMethod.DELETE)
 	public  ResponseEntity<Object> delete(@PathVariable("id") int id) {	
 	return ResponseEntity.ok(x.deleteEntity(id, DelegationModel.class));
 	}		
 	
 	// search delegated not secured
-	@RequestMapping(value = "/delegations/search" ,  method = RequestMethod.POST ,
+	@RequestMapping(value = "/delegations/search/unsecured" ,  method = RequestMethod.POST ,
 			 consumes = "application/json")
 	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( DelegationModel.class , search));
+	return ResponseEntity.ok(x.searchEntity( DelegationModel.class , search , "unsecured"));
 	}
 }

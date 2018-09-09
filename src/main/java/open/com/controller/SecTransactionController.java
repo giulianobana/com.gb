@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.SecTransactionDAO;
+import open.com.bl.SecTransactionBusiness;
 import open.com.model.object.CashTransactionModel;
 import open.com.model.object.SecTransactionModel;
 import open.com.model.type.Criteria;
@@ -27,23 +27,16 @@ public class SecTransactionController {
 
 	@Autowired
 	@Qualifier("SecTransactionBusiness")
-	private SecTransactionDAO x;
+	private SecTransactionBusiness x;
 	
 	@RequestMapping(value = "/sectransactions/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
 		return ResponseEntity.ok(x.getEntity(id , SecTransactionModel.class) );
 	}
 	
-	//create
 	@RequestMapping(value = "/sectransactions/" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> add(@RequestBody SecTransactionModel p) {	
 	return ResponseEntity.ok(x.createEntity(p));
-	}
-	
-	//create
-	@RequestMapping(value = "/sectransactions/search" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.listAll(SecTransactionModel.class));
 	}
 	
 	@RequestMapping(value = "/sectransactions/{id}" ,  method = RequestMethod.PUT)
@@ -54,6 +47,6 @@ public class SecTransactionController {
 	@RequestMapping(value = "/sectransactions/search" ,  method = RequestMethod.POST ,
 			 consumes = "application/json")
 	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( SecTransactionModel.class , search));
+	return ResponseEntity.ok(x.searchEntity( SecTransactionModel.class , search , "account"));
 	}	
 }

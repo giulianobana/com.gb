@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import open.com.dao.CardDAOImpl;
+import open.com.dao.AccessDAOImpl;
 import open.com.model.object.CardModel;
 import open.com.model.object.CustomerModel;
 import open.com.model.object.ResponseObject;
@@ -12,7 +12,7 @@ import open.com.model.object.ResponseObject;
 
 
  @Component("CardBusiness")
-	public class CardBusiness extends CardDAOImpl {
+	public class CardBusiness extends AccessDAOImpl {
 
 		@Override
 		public boolean onCreateChecks(ResponseObject response , Object o) {

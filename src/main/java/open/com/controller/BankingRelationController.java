@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.BankingRelationDAO;
-import open.com.dao.CardDAO;
+import open.com.bl.BankingRelationBusiness;
 import open.com.model.object.BankingRelationModel;
 import open.com.model.object.KycModel;
 import open.com.model.type.Criteria;
@@ -28,7 +27,7 @@ public class BankingRelationController {
 
 	@Autowired
 	@Qualifier("BankingRelationBusiness")
-	private BankingRelationDAO x;
+	private BankingRelationBusiness x;
 	
 	
 	@RequestMapping(value = "/bankingrelations/{id}" ,  method = RequestMethod.GET)
@@ -50,6 +49,6 @@ public class BankingRelationController {
 	@RequestMapping(value = "/bankingrelations/search" ,  method = RequestMethod.POST ,
 			 consumes = "application/json")
 	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( BankingRelationModel.class , search));
+	return ResponseEntity.ok(x.searchEntity( BankingRelationModel.class , search, "customer"));
 	}	
 }

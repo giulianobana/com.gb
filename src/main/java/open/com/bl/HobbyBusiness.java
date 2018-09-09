@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 import open.com.dao.AccessDAOImpl;
 
- @Component("BankingRelationBusiness")
-	public class BankingRelationBusiness extends AccessDAOImpl {
+ @Component("HobbyBusiness")
+	public class HobbyBusiness extends AccessDAOImpl {
 
 	}
 

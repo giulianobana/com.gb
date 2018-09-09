@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
+import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -153,30 +154,59 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		return response;	
 	}
 	
-	
-	//list all
 	@Override
-	public List<Object> listAll(Class<?> classe) {
-		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
-	    session.beginTransaction();
-	    String queryString =  "Select e from " + classe.getName() + " e " 
-             + " order by e.id ";
-		Query<Object> query = session.createQuery(queryString);
-	    return query.getResultList();
-
-	}
-    // 
-	@Override
-	public Object listAll(Class<?> classe , Criteria search) {
-		// TODO Auto-generated method stub 
+	public Object searchEntity(Class<?> classe , Criteria search , String level) {
 		ResponseObject response = new ResponseObject();
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
 	    StringBuilder outputBuilder = new StringBuilder("");
 	    
-	    outputBuilder.append("Select e from " + classe.getName() + " e  where 1=1 " );
+	    if (search.isUnSecured()) {
+	    	level = "unsecured";
+	    }
 	    
+	    switch (level.toLowerCase()) { 
+	    case "account" : 
+	    outputBuilder.append("Select e from " + classe.getName() + " e " 
+	    		+ " , " +  CustomerModel.class.getName() + " cus " +
+	    		 " , " +  BankingRelationModel.class.getName() + " br " +
+	    		" , " +  AccountModel.class.getName() + " acc " + 
+	    		" where e.accountid=acc.id and "
+	    		+ " br.id=acc.bankingrelationid and "
+	    		+ " cus.id=br.customerid "
+//	    		+ " and  e.accountid = :accountid "
+	    		+ " and ( cus.creator=:userlogin or"
+	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+	    	             " r where r.delegatedTo =:userlogin) ) "); 
+	    	break;
+	    	case "customer" :
+		     outputBuilder.append( "Select e from " + classe.getName() + " e " 
+		    		+ " , " +  CustomerModel.class.getName() + " cus" +
+		    		" where cus.id=e.customerid  " +	
+		    		" and ( cus.creator=:userlogin or"
+		    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+		    	             " r where r.delegatedTo =:userlogin) )");
+		     	break;
+	    	case "bankingrelation" :
+	    	    outputBuilder.append("Select e from " + classe.getName() + " e " 
+	    	    		+ " , " +  CustomerModel.class.getName() + " cus " +
+	    	    		 " , " +  BankingRelationModel.class.getName() + " br " 
+	    	    		+ " where   br.id=e.bankingrelationid and "
+	    	    		+ " cus.id=br.customerid "
+	    	    		+ " and ( cus.creator=:userlogin or"
+	    	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+	    	    	             " r where r.delegatedTo =:userlogin) ) "); 
+	    	    break;
+	    	    
+	    	case "unsecured" :    
+	    	    outputBuilder.append("Select e from " + classe.getName() + " e  where :userlogin =:userlogin " );
+	    	    break;
+	    	    
+	    	default :
+	    		outputBuilder.append("");
+			
+	    }
+	    	
 		if (search != null) {
 			for (Search s1 : search.getFilter()) {
 				outputBuilder
@@ -187,21 +217,29 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		}
 	    
 	    String queryString = outputBuilder.toString() + " order by  " + 
-	    (search.getSorting() !=	 null ? search.getSorting() : "id desc" );
-	    
-		try   {
-			Query<Object> query = session.createQuery(queryString);
-			response.setObject(query.getResultList());
-		} catch (IllegalArgumentException  e ) {
-			addErrorMessage(response, "ERROR", "400", e.getCause().getMessage());
-			
-		} 
-//	
-		
-	    return response;
+	    (search.getSorting() !=	 null ? search.getSorting() : " e.id desc" );
 
+	    
+	    try {
+	    
+			Query<Object> query = session.createQuery(queryString);
+
+			query.setParameter("userlogin", (String) request.getAttribute("user"));
+
+			response.setObject(query.getResultList());
+			addErrorMessage(response, "INFO", "200", "Resource succesfully retrieved");
+		}
+		catch (QueryException | IllegalArgumentException | SQLGrammarException  e ) {
+			addErrorMessage(response, "ERROR" , "400" ,  e.getCause().getLocalizedMessage());
+		}
+		return response;	
 	}
 	
+	
+	
+	
+	
+	/*support*/
 	// errore on create
 	public boolean onCreateChecks(ResponseObject res , Object o) {
 		return false;

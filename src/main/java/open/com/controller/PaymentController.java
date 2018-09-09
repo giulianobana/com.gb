@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.PaymentDAO;
+import open.com.bl.PaymentBusiness;
 import open.com.model.object.CardModel;
 import open.com.model.object.PaymentModel;
 import open.com.model.type.Criteria;
@@ -27,7 +27,7 @@ public class PaymentController {
 
 	@Autowired
 	@Qualifier("PaymentBusiness")
-	private PaymentDAO x;
+	private PaymentBusiness x;
 	
 	@RequestMapping(value = "/payments/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
@@ -40,21 +40,16 @@ public class PaymentController {
 	return ResponseEntity.ok(x.createEntity(p));
 	}
 	
-	//create
-	@RequestMapping(value = "/payments/search" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.listAll(PaymentModel.class));
-	}
-	
-	@RequestMapping(value = "/payments/search" ,  method = RequestMethod.POST ,
-			 consumes = "application/json")
-	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( PaymentModel.class , search));
-	}	
-	
 	@RequestMapping(value = "/payments/{id}" ,  method = RequestMethod.PUT)
 	public  ResponseEntity<Object> update(@RequestBody PaymentModel p) {	
 	return ResponseEntity.ok(x.updateEntity(p));
 	}
+	@RequestMapping(value = "/payments/search" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.searchEntity( PaymentModel.class , search , "account"));
+	}	
+	
+
 	
 }

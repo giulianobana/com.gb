@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.CashTransactionDAO;
-import open.com.model.object.CardModel;
+import open.com.bl.CashTransactionBusiness;
 import open.com.model.object.CashTransactionModel;
 import open.com.model.type.Criteria;
 
@@ -27,7 +26,7 @@ public class CashTransactionController {
 
 	@Autowired
 	@Qualifier("CashTransactionBusiness")
-	private CashTransactionDAO x;
+	private CashTransactionBusiness x;
 	
 	@RequestMapping(value = "/cashtransactions/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
@@ -40,11 +39,6 @@ public class CashTransactionController {
 	return ResponseEntity.ok(x.createEntity(p));
 	}
 	
-	//create
-	@RequestMapping(value = "/cashtransactions/search" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> list() {	
-	return ResponseEntity.ok(x.listAll(CashTransactionModel.class));
-	}
 	
 	@RequestMapping(value = "/cashtransactions/{id}" ,  method = RequestMethod.PUT)
 	public  ResponseEntity<Object> update(@RequestBody CashTransactionModel p) {	
@@ -54,6 +48,6 @@ public class CashTransactionController {
 	@RequestMapping(value = "/cashtransactions/search" ,  method = RequestMethod.POST ,
 			 consumes = "application/json")
 	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( CashTransactionModel.class , search));
+	return ResponseEntity.ok(x.searchEntity( CashTransactionModel.class , search , "account"));
 	}	
 }

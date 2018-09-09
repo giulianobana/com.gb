@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import open.com.model.type.GenderType;
 
 @Entity(name = "CustomerModel")
 @Table(name="CUSTOMER")
@@ -58,6 +65,9 @@ public class CustomerModel {
 	@Column(nullable = false) 
 	private String street;
 	
+	@Enumerated(EnumType.STRING) 
+	private GenderType gender;
+	
 	@Column(nullable = false , updatable = false) 
 	private String creator;
 	
@@ -65,14 +75,28 @@ public class CustomerModel {
 	@OneToOne(mappedBy="customer")
 	private KycModel kyc;
 	
-	@OneToMany(mappedBy="customer", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="customer" /*, fetch = FetchType.EAGER */)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<BankingRelationModel> bankingRelations;	
 	
+	@OneToMany(mappedBy="customer" /*, fetch = FetchType.EAGER */)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<HobbyModel> hobbies;
 	
+	
+	
+	public List<HobbyModel> getHobbies() {
+		return hobbies;
+	}
+
+
+
 	public List<BankingRelationModel> getBankingRelations() {
 		return bankingRelations;
 	}
 
+
+	
 	public KycModel getKyc() {
 		return kyc;
 	}
@@ -166,6 +190,14 @@ public class CustomerModel {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public GenderType getGender() {
+		return gender;
+	}
+
+	public void setGender(GenderType gender) {
+		this.gender = gender;
 	}
 	
 }

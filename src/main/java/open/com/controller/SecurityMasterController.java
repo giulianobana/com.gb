@@ -14,41 +14,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.bl.ProductBusiness;
+import open.com.bl.SecurityMasterBusiness;
 import open.com.model.object.ProductModel;
+import open.com.model.object.SecurityMasterModel;
 import open.com.model.type.Criteria;
 
 
 
 @RestController
 @Scope("request")
-public class ProductController {
+public class SecurityMasterController {
 
 	@Autowired
-	@Qualifier("ProductBusiness")
-	private ProductBusiness x;
-	
-	@RequestMapping(value = "/products/{id}" ,  method = RequestMethod.GET)
-	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(x.getEntity(id , ProductModel.class) );
-	}
+	@Qualifier("SecurityMasterBusiness")
+	private SecurityMasterBusiness x;
 	
 	//create
-	@RequestMapping(value = "/products/" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> add(@RequestBody ProductModel p) {	
-	return ResponseEntity.ok(x.createEntity(p));
-	}
-	
-	@RequestMapping(value = "/products/{id}" ,  method = RequestMethod.PUT)
-	public  ResponseEntity<Object> update(@RequestBody ProductModel p) {	
-	return ResponseEntity.ok(x.updateEntity(p));
-	}
-	//create
-	@RequestMapping(value = "/products/search" ,  method = RequestMethod.POST)
+	@RequestMapping(value = "/securities/search" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> list(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.searchEntity(ProductModel.class , search , "unsecured"));
+	return ResponseEntity.ok(x.searchEntity(SecurityMasterModel.class , search , "unsecured"));
 	}
-	
-
-	
+		
 }

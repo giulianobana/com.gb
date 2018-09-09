@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import open.com.dao.CardDAO;
+import open.com.bl.CardBusiness;
 import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CardModel;
 import open.com.model.object.CashTransactionModel;
@@ -28,7 +28,7 @@ public class CardController {
 
 	@Autowired
 	@Qualifier("CardBusiness")
-	private CardDAO x;
+	private CardBusiness x;
 	
 	@RequestMapping(value = "/cards/{id}" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {	
@@ -41,10 +41,6 @@ public class CardController {
 	return ResponseEntity.ok(x.createEntity(p));
 	}
 	
-	@RequestMapping(value = "/cards/search" ,  method = RequestMethod.POST)
-	public  ResponseEntity<Object> search() {	
-	return ResponseEntity.ok(x.listAll(CardModel.class));
-	}
 	
 	@RequestMapping(value = "/cards/{id}" ,  method = RequestMethod.PUT)
 	public  ResponseEntity<Object> update(@RequestBody CardModel p) {	
@@ -54,7 +50,7 @@ public class CardController {
 	@RequestMapping(value = "/cards/search" ,  method = RequestMethod.POST ,
 			 consumes = "application/json")
 	public  ResponseEntity<Object> searchAllFilter(@RequestBody Criteria  search) {	
-	return ResponseEntity.ok(x.listAll( CardModel.class , search));
+	return ResponseEntity.ok(x.searchEntity( CardModel.class , search , "account"));
 	}	
 	
 }
