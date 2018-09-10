@@ -19,14 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.bl.CustomerBusiness;
-import open.com.dao.AccessDAOImpl;
-import open.com.dao.CustomerDAO;
-import open.com.model.object.BankingRelationModel;
+
 import open.com.model.object.CustomerModel;
-import open.com.model.object.CustomerModelSimplied;
-import open.com.model.object.KycModel;
 import open.com.model.type.Criteria;
-import open.com.model.type.Search;
 
 @RestController
 @Scope("request")

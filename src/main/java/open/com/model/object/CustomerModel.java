@@ -4,6 +4,7 @@ package open.com.model.object;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,23 +76,21 @@ public class CustomerModel {
 	@OneToOne(mappedBy="customer")
 	private KycModel kyc;
 	
-	@OneToMany(mappedBy="customer" /*, fetch = FetchType.EAGER */)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<BankingRelationModel> bankingRelations;	
+	@OneToMany(mappedBy="customer" , fetch = FetchType.EAGER )
+	private Set<BankingRelationModel> bankingRelations;	
 	
-	@OneToMany(mappedBy="customer" /*, fetch = FetchType.EAGER */)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<HobbyModel> hobbies;
+	@OneToMany(mappedBy="customer" , fetch = FetchType.EAGER )
+	private Set<HobbyModel> hobbies;
 	
 	
 	
-	public List<HobbyModel> getHobbies() {
+	public Set<HobbyModel> getHobbies() {
 		return hobbies;
 	}
 
 
 
-	public List<BankingRelationModel> getBankingRelations() {
+	public Set<BankingRelationModel> getBankingRelations() {
 		return bankingRelations;
 	}
 
