@@ -19,7 +19,7 @@ public interface AccessDAO {
 	public Object searchEntityByCustomer(int id , Class<?> classe);
 	
 	public Object searchEntityByAccount(int id , Class<?> classe);
-	
+	public Object searchEntityByAccount2(int id , Class<?> classe);	
 	public Object searchEntity(Class<?> classe , Criteria search , String level);
 
 	

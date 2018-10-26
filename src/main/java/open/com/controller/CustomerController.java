@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import open.com.bl.CustomerBusiness;
 
 import open.com.model.object.CustomerModel;
+import open.com.model.object.CustomerSimpleModel;
 import open.com.model.type.Criteria;
 
 @RestController
@@ -56,5 +57,10 @@ public class CustomerController {
 	return ResponseEntity.ok(x.searchEntity( CustomerModel.class , search , "unsecured"));
 	}
 
+	@RequestMapping(value = "/customers/search/unsecuredsimple" ,  method = RequestMethod.POST ,
+			 consumes = "application/json")
+	public  ResponseEntity<Object> searchAllSimpleFilter(@RequestBody Criteria  search) {	
+	return ResponseEntity.ok(x.searchEntity( CustomerSimpleModel.class , search , "unsecured"));
+	}
 
 }

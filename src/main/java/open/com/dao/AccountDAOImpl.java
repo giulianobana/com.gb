@@ -17,6 +17,7 @@ import open.com.model.object.DelegationModel;
 import open.com.model.object.ResponseObject;
 import open.com.model.object.SecTransactionModel;
 import open.com.model.object.SecurityPositionModel;
+import open.com.model.object.SecurityPriceModel;
 import open.com.model.object.CashBalanceModel;
 import open.com.model.object.CashTransactionModel;
 
@@ -29,7 +30,7 @@ public class AccountDAOImpl extends AccessDAOImpl implements AccountDAO {
 		ResponseObject response = new ResponseObject();
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
-	    String queryString =  "Select new CashBalanceModel( currency , sum("
+	    String queryString =  "Select new open.com.model.object.CashBalanceModel( currency , sum("
 	    		+ " CASE when ( e.sign='DEBIT' )  then (e.amount * - 1) else "
 	    		+ "e.amount end ) )  from " + CashTransactionModel.class.getName() + " e " +
 	    		" where e.accountid=:accountid "
@@ -48,11 +49,13 @@ public class AccountDAOImpl extends AccessDAOImpl implements AccountDAO {
 		ResponseObject response = new ResponseObject();
 		Session session = sessionFactory.openSession();
 	    session.beginTransaction();
-	    String queryString =  "Select new SecurityPositionModel( e.ISIN , sum("
+	    String queryString =  "Select new open.com.model.object.SecurityPositionModel( e.ISIN , sum("
 	    		+ " CASE when ( e.sign='SELL' )  then (e.quantity * - 1) else "
-	    		+ "e.quantity end ) )  from " + SecTransactionModel.class.getName() + " e " +
-	    		" where e.accountid=:accountid "
-	    		+ "group by e.ISIN" ;
+	    		+ "e.quantity end ) , p.price  , p.valuedate)  from " + SecTransactionModel.class.getName() + " e ,  "
+	    				+ SecurityPriceModel.class.getName() + " p " +
+	    		" where e.accountid=:accountid and p.isin = e.ISIN "
+	    		+ " and p.isLast = false "
+	    		+ " group by e.ISIN , p.price , p.valuedate " ;
 	    List<SecurityPositionModel> query = (List<SecurityPositionModel>) session.createQuery(queryString , SecurityPositionModel.class)
 	    		.setParameter("accountid", accountid).getResultList();
 	    

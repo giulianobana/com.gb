@@ -37,7 +37,7 @@ public class SecurityPriceModel implements Serializable {
 	private double price;
 
 	@Id
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss z", timezone="CET")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
 	@Temporal(TemporalType.DATE)
 	private Date valuedate;
 	

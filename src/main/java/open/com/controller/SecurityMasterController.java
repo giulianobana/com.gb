@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import open.com.bl.SecurityMasterBusiness;
+import open.com.model.object.KycModel;
 import open.com.model.object.ProductModel;
 import open.com.model.object.SecurityMasterModel;
 import open.com.model.type.Criteria;
@@ -33,6 +34,13 @@ public class SecurityMasterController {
 	@RequestMapping(value = "/securities/search" ,  method = RequestMethod.POST)
 	public  ResponseEntity<Object> list(@RequestBody Criteria  search) {	
 	return ResponseEntity.ok(x.searchEntity(SecurityMasterModel.class , search , "unsecured"));
+	}
+	
+	
+	//create
+	@RequestMapping(value = "/securities/" ,  method = RequestMethod.POST)
+	public  ResponseEntity<Object> add(@RequestBody SecurityMasterModel p) {	
+	return ResponseEntity.ok(x.createEntity(p));
 	}
 		
 }

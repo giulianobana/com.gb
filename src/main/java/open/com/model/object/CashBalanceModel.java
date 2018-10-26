@@ -19,10 +19,7 @@ import open.com.model.type.CurrencyType;
 import open.com.model.type.SignType;
 import open.com.model.type.SignType2;
 
-@Entity
 public class CashBalanceModel {
-
-	@Id
 	private CurrencyType currency;
 	private long balance;
 	

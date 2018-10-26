@@ -22,6 +22,7 @@ import open.com.model.object.AccountModel;
 import open.com.model.object.BankingRelationModel;
 import open.com.model.object.CardModel;
 import open.com.model.object.PaymentModel;
+import open.com.model.object.ResponseObject2;
 import open.com.model.object.SecTransactionModel;
 import open.com.model.type.Criteria;
 import open.com.model.object.CashTransactionModel;
@@ -82,8 +83,16 @@ public class AccountController {
 	
 	@RequestMapping(value = "/accounts/{id}/cashtransactions" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> listCash(@PathVariable("id") int id) {	
-		return ResponseEntity.ok(p.searchEntityByAccount(id, CashTransactionModel.class) );
+		return ResponseEntity.ok( p.searchEntityByAccount(id, CashTransactionModel.class));
+		
 	}
+	
+	@RequestMapping(value = "/accounts/{id}/cashtransactionss" ,  method = RequestMethod.GET)
+	public ResponseEntity<Object> listCassh(@PathVariable("id") int id) {	
+		return ResponseEntity.ok( p.searchEntityByAccount2(id, CashTransactionModel.class));
+		
+	}
+	
 
 	@RequestMapping(value = "/accounts/{id}/sectransactions" ,  method = RequestMethod.GET)
 	public ResponseEntity<Object> listSec(@PathVariable("id") int id) {	
