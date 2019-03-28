@@ -29,6 +29,7 @@ import open.com.model.object.KycModel;
 import open.com.model.object.ResponseObject;
 import open.com.model.object.CashTransactionModel;
 import open.com.model.object.ResponseObject.Messages;
+import open.com.model.object.ResponseObject2;
 import open.com.model.type.Criteria;
 import open.com.model.type.Search;
 
@@ -155,6 +156,31 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	}
 	
 	@Override
+	public Object searchEntityByAccount2(int id , Class<?> classe ) {
+		ResponseObject2 response = new ResponseObject2();
+		Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+	    String queryString =  "Select e from " + classe.getName() + " e " 
+	    		+ " , " +  CustomerModel.class.getName() + " cus " +
+	    		 " , " +  BankingRelationModel.class.getName() + " br " +
+	    		" , " +  AccountModel.class.getName() + " acc " + 
+	    		" where e.accountid=acc.id and "
+	    		+ " br.id=acc.bankingrelationid and "
+	    		+ " cus.id=br.customerid "
+	    		+ " and  e.accountid = :accountid " +	
+	    		" and ( cus.creator=:userlogin or"
+	    	             + " cus.creator in ( select r.username from " + DelegationModel.class.getName() +
+	    	             " r where r.delegatedTo =:userlogin) )";
+		Query<Object> query = session.createQuery(queryString);
+		query.setParameter("accountid", id);
+		query.setParameter("userlogin", (String) request.getAttribute("user"));
+
+//		addErrorMessage(response, "INFO" , "200" , "Resource succesfully retrieved");
+		response.setResult(query.getResultList());
+		return response;	
+	}
+	
+	@Override
 	public Object searchEntity(Class<?> classe , Criteria search , String level) {
 		ResponseObject response = new ResponseObject();
 		Session session = sessionFactory.openSession();
@@ -222,10 +248,14 @@ public abstract class AccessDAOImpl implements AccessDAO {
 	    
 	    try {
 	    
-			Query<Object> query = session.createQuery(queryString);
+	    	
+			if (search.getTop() == 0)  search.setTop(10);
+	    	if (search.getTop() > 100)  search.setTop(100);
+	    	Query<Object> query = session.createQuery(queryString).setMaxResults(search.getTop());
 
 			query.setParameter("userlogin", (String) request.getAttribute("user"));
 
+	    	
 			response.setObject(query.getResultList());
 			addErrorMessage(response, "INFO", "200", "Resource succesfully retrieved");
 		}
@@ -263,4 +293,6 @@ public abstract class AccessDAOImpl implements AccessDAO {
 		
 	}
 
+
+	
 }

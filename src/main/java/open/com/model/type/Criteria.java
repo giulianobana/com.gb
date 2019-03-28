@@ -7,9 +7,20 @@ public class Criteria {
 	private ArrayList<Search> filter;
 	private String sorting;
 	private boolean unSecured;
+	private int top;
 	
 	
 	
+	public int getTop() {
+		return top;
+	}
+
+
+	public void setTop(int top) {
+		this.top = top;
+	}
+
+
 	public boolean isUnSecured() {
 		return unSecured;
 	}
@@ -30,5 +41,13 @@ public class Criteria {
 	public void setSorting(String sorting) {
 		this.sorting = sorting;
 	}
+
+
+
+	public void setUnSecured(boolean unSecured) {
+		this.unSecured = unSecured;
+	}
+
+
 	
 }

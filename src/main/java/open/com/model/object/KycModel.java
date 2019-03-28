@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import open.com.model.type.JobType;
+import open.com.model.type.MaritalStatus;
 
 @Entity
 @Table(name="KNOWYOURCUSTOMER")
@@ -42,8 +43,9 @@ public class KycModel {
 	private int annualSpending;
 	
 	private int totalWealth;
-	
-	private int  maritalstatus;
+
+	@Enumerated(EnumType.STRING)
+	private MaritalStatus  maritalstatus;
 
 	private int  numberofkids;
 	
@@ -108,11 +110,11 @@ public class KycModel {
 		this.totalWealth = totalWealth;
 	}
 
-	public int getMaritalstatus() {
+	public MaritalStatus getMaritalstatus() {
 		return maritalstatus;
 	}
 
-	public void setMaritalstatus(int maritalstatus) {
+	public void setMaritalstatus(MaritalStatus maritalstatus) {
 		this.maritalstatus = maritalstatus;
 	}
 

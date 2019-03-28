@@ -19,13 +19,32 @@ import open.com.model.type.CurrencyType;
 import open.com.model.type.SignType;
 import open.com.model.type.SignType2;
 
-@Entity
+
 public class SecurityPositionModel {
 
-	@Id
 	private String isin;
 	private long quantity;
 	
+	private double price;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
+	@Temporal(TemporalType.DATE)
+	private Date valuedate;
+	
+	private double counterValue;
+
+	
+	public double getCounterValue() {
+		return quantity * price ;
+	}
+	
+	
+	public Date getValuedate() {
+		return valuedate;
+	}
+	public double getPrice() {
+		return price;
+	}
 	public String getIsin() {
 		return isin;
 	}
@@ -40,10 +59,13 @@ public class SecurityPositionModel {
 	}
 	
 	
-	public SecurityPositionModel(String isin, long quantity) {
+	public SecurityPositionModel(String isin, long quantity , double price , Date valuedate) {
 		super();
 		this.isin = isin;
 		this.quantity = quantity;
+		this.price = price;
+		this.valuedate =  valuedate;
+
 	}
 	
 	
