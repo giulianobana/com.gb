@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -54,14 +55,13 @@ public class BankingRelationModel {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<AccountModel> accounts;	
 
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JsonIgnoreProperties
-//    @JoinColumn(name = "productid" , insertable=false ,  updatable = false)
-//	private ProductModel productDescription;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "productid" , insertable=false ,  updatable = false)
+	private ProductModel product;
 //	
 //	
-//	public String getProductDescription() {
-//		return productDescription.getDescription();
+// 	public String getProductDescription() {
+// 		return product.getDescription();
 //	}
 
 	public int getId() {

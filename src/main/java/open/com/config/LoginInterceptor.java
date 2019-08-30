@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import open.com.model.object.Auth0User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
+	final static Logger logger = Logger.getLogger(LoginInterceptor.class);
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception)
@@ -37,7 +39,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	
+    	logger.error("Autho0.com");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("Authorization", new String(request.getHeader("Authorization")));

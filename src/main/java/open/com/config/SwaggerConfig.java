@@ -1,7 +1,9 @@
 package open.com.config;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -14,9 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig extends WebMvcConfigurationSupport {
+	final static Logger logger = Logger.getLogger(SwaggerConfig.class);
 
     public Docket api(){
-
+    	logger.error("SwaggerCOnfig.doket");
         return new Docket(DocumentationType.SWAGGER_2)  
                 .select()                                  
                 .apis(RequestHandlerSelectors.any())              
@@ -32,5 +35,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor()).excludePathPatterns("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**");
     }
 }

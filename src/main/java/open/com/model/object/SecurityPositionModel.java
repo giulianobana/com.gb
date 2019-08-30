@@ -21,7 +21,7 @@ import open.com.model.type.SignType2;
 
 
 public class SecurityPositionModel {
-
+	
 	private String isin;
 	private long quantity;
 	
@@ -32,8 +32,8 @@ public class SecurityPositionModel {
 	private Date valuedate;
 	
 	private double counterValue;
-
 	
+		
 	public double getCounterValue() {
 		return quantity * price ;
 	}
@@ -65,9 +65,10 @@ public class SecurityPositionModel {
 		this.quantity = quantity;
 		this.price = price;
 		this.valuedate =  valuedate;
-
+		
 	}
 	
 	
-
+	
 	}
+	

@@ -33,6 +33,7 @@ public class KycModel {
 	private int id;
 
 	
+	@Column(nullable = false) 
 	private int  customerid;
 	
 	@Enumerated(EnumType.STRING)

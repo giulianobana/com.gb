@@ -2,5 +2,5 @@ package open.com.model.type;
 
 public enum AccountType {
 
-	CASH , SAFEKEEPING
+	CASH , SAFEKEEPING , MORTGAGE
 }
