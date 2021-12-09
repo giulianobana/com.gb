@@ -16,7 +16,7 @@
 <!-- 		<jetty.version>9.3.0.M2</jetty.version>
  -->				<jetty.version>9.3.13.v20161014</jetty.version>
 		<servlets.version>3.1.0</servlets.version>
-		<jackson.library>2.9.5</jackson.library>
+		<jackson.library>2.9.10.8</jackson.library>
 		<hibernate.version>5.3.0.Final</hibernate.version>
 		<spring.orm>5.0.6.RELEASE</spring.orm>
 		<mysql.connector>8.0.11</mysql.connector>
